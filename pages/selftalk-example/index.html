@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Settings Refactor</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        /* Additional styles for code example page */
+        .comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .version {
+            width: 100%;
+            background-color: #252526;
+            border-radius: 0;
+            padding: 0;
+            border: 1px solid #3e3e42;
+            transition: border-color 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .version:hover {
+            border-color: #8abf8a;
+        }
+        
+        .original {
+            border-color: #ff6b6b;
+        }
+        
+        .updated {
+            border-color: #4ecdc4;
+        }
+        
+        .version-title {
+            font-size: 1.1em;
+            margin: 0;
+            padding: 12px 20px;
+            text-align: left;
+            font-weight: 600;
+            background: linear-gradient(to bottom, #2d2d30, #252526);
+            border-bottom: 1px solid #3e3e42;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .original .version-title {
+            color: #ff6b6b;
+        }
+        
+        .updated .version-title {
+            color: #4ecdc4;
+        }
+        
+        .code-section {
+            background: #1e1e1e;
+            border-radius: 0;
+            padding: 20px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #3e3e42;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .updated .code-section {
+            max-height: 800px;
+        }
+        
+        .code-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(to bottom, #2d2d30, #1e1e1e);
+            border-bottom: 1px solid #3e3e42;
+            border-radius: 0;
+        }
+        
+        .code-section code {
+            color: #d4d4d4;
+            font-family: 'Cascadia Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .keyword { color: #569cd6; font-weight: 500; }
+        .string { color: #ce9178; }
+        .type { color: #4ec9b0; }
+        .comment { color: #6a9955; font-style: italic; }
+        .property { color: #9cdcfe; }
+        .namespace { color: #c586c0; }
+        .using { color: #569cd6; }
+        .class { color: #4ec9b0; font-weight: 500; }
+        .method { color: #dcdcaa; }
+        .enum { color: #4ec9b0; }
+        .value { color: #b5cea8; }
+        
+        .visual-diagram {
+            background-color: #252526;
+            border-radius: 0;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid #3e3e42;
+        }
+        
+        .diagram-title {
+            font-size: 1.4em;
+            color: #d4d4d4;
+            margin-bottom: 25px;
+            font-weight: 600;
+            text-align: left;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-bottom: 1px solid #3e3e42;
+            padding-bottom: 10px;
+        }
+        
+        .flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .flow-item {
+            flex: 1;
+            max-width: 300px;
+            padding: 20px;
+            border-radius: 0;
+            border: 1px solid #3e3e42;
+        }
+        
+        .monolithic {
+            background-color: #252526;
+            color: #d6d8db;
+            border-color: #ff6b6b;
+        }
+        
+        .arrow {
+            font-size: 1.5em;
+            color: #569cd6;
+            margin: 0 20px;
+            font-weight: 600;
+        }
+        
+        .modular {
+            background-color: #252526;
+            color: #d6d8db;
+            border-color: #4ecdc4;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .benefit-card {
+            background-color: #252526;
+            border-radius: 0;
+            padding: 1.5rem;
+            border: 1px solid #3e3e42;
+            transition: border-color 0.3s ease;
+        }
+        
+        
+        
+        .benefit-card h3 {
+            color: #569cd6;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .benefit-card p {
+            color: #a1a4a8;
+            font-weight: 300;
+        }
+        
+        .example-requests {
+            background-color: #252526;
+            border-radius: 0;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid #3e3e42;
+        }
+        
+        .example-title {
+            font-size: 1.3em;
+            color: #d4d4d4;
+            margin-bottom: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-bottom: 1px solid #3e3e42;
+            padding-bottom: 10px;
+        }
+        
+        .example {
+            background-color: #252526;
+            border-radius: 0;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 3px solid #569cd6;
+            border: 1px solid #3e3e42;
+        }
+        
+        .example h4 {
+            color: #569cd6;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+                 .json-code {
+             background: #1e1e1e;
+             color: #d4d4d4;
+             padding: 15px;
+             border-radius: 0;
+             font-family: 'Cascadia Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+             font-size: 13px;
+             overflow-x: auto;
+             border: 1px solid #3e3e42;
+             line-height: 1.4;
+         }
+         
+         .json-code .comment {
+             color: #6a9955;
+             font-style: italic;
+             font-weight: 400;
+         }
+        
+        .flow-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .flow-item li {
+            font-weight: 300;
+            font-size: 1rem;
+            color: #d4d4d4;
+            margin-bottom: 0.3rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+        
+        .flow-item li::before {
+            content: "→";
+            color: #569cd6;
+            position: absolute;
+            left: 0;
+            font-weight: 600;
+        }
+        
+        .flow-item h3 {
+            color: #569cd6;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .flow-item p {
+            color: #d4d4d4;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+        
+        .flow-item strong {
+            color: #c9d1d9;
+            font-weight: 600;
+        }
+        
+                 @media (max-width: 768px) {
+             .comparison {
+                 flex-direction: column;
+                 gap: 20px;
+             }
+            
+            .flow {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; color: #fff; margin-bottom: 2rem; font-size: 2.5em;">Refactoring Playlist API for Partial Updates</h1>
+        
+        <div class="task-section" style="background-color: #252526; border-radius: 0; padding: 1.5rem; margin: 2rem 0; border: 1px solid #3e3e42;">
+                         <h2 style="font-size: 1.4em; color: #d4d4d4; margin-bottom: 20px; font-weight: 600; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; border-bottom: 1px solid #3e3e42; padding-bottom: 10px;">Problem</h2>
+            <p style="color: #d4d4d4; font-weight: 300; line-height: 1.6; margin-bottom: 15px;">
+                I was tasked with refactoring the update playlist settings API request to support partial updates. The main motivation was to implement a favorite button that could be toggled independently without affecting other playlist settings.
+            </p>
+            <p style="color: #d4d4d4; font-weight: 300; line-height: 1.6;">
+                Previously, the API required sending a complete form with all settings whenever any single setting needed to be updated. This approach was inefficient and created unnecessary complexity for simple operations like toggling a favorite status.
+            </p>
+        </div>
+        
+        <div class="comparison">
+            <div class="version original">
+                                 <div class="version-title">Original: Monolithic Approach</div>
+                <div class="code-section">
+                    <code><span class="keyword">public class</span> <span class="type">UpdatePlaylistSettingsRequest</span>
+{
+    <span class="keyword">public</span> <span class="type">string</span> <span class="property">Name</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public</span> <span class="type">bool</span> <span class="property">Shuffle</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public</span> <span class="type">int</span> <span class="property">Delay</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public</span> <span class="type">int</span> <span class="property">Repeat</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public</span> <span class="type">bool</span> <span class="property">Favorite</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public</span> <span class="type">bool</span> <span class="property">Archived</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public</span> <span class="type">Guid?</span> <span class="property">BackgroundSoundId</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+
+    <span class="keyword">public</span> <span class="type">Playlist</span> MapToPlaylist(<span class="type">Playlist</span> playlist)
+    {
+        <span class="comment">// Updates ALL properties every time</span>
+        playlist.Name = Name;
+        playlist.Shuffle = Shuffle;
+        playlist.Delay = Delay;
+        playlist.Repeat = Repeat;
+        playlist.Favorite = Favorite;
+        playlist.BackgroundSoundId = BackgroundSoundId;
+        playlist.Archived = Archived;
+        playlist.ModifiedDate = <span class="type">DateTime</span>.UtcNow;
+        
+        <span class="keyword">return</span> playlist;
+    }
+}</code>
+                </div>
+            </div>
+            
+            <div class="version updated">
+                                 <div class="version-title">Updated: Modular Approach</div>
+                <div class="code-section">
+                    <code><span class="keyword">using</span> SelfTalk.Data.Schema;
+<span class="keyword">using</span> System.Text.Json;
+<span class="keyword">namespace</span> SelfTalk.Models.Requests;
+
+<span class="keyword">public class</span> <span class="type">UpdatePlaylistSettingsRequest</span>
+{
+    <span class="keyword">public record</span> <span class="type">PlaylistSettingRequest</span>(<span class="type">SettingTypeCode</span> SettingTypeCode, <span class="type">object?</span> SettingValue);
+    <span class="keyword">public required</span> <span class="type">List&lt;PlaylistSettingRequest&gt;</span> <span class="property">Settings</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+
+    <span class="keyword">public</span> <span class="type">Playlist</span> MapToPlaylist(<span class="type">Playlist</span> playlist)
+    {
+        <span class="type">SettingTypeCode</span> typeCode = <span class="type">SettingTypeCode</span>.NotSet;
+        <span class="type">JsonElement?</span> jsonElement = <span class="keyword">null</span>;
+        <span class="keyword">try</span>
+        {
+            <span class="keyword">foreach</span> (<span class="keyword">var</span> setting <span class="keyword">in</span> Settings)
+            {
+                typeCode = setting.SettingTypeCode;
+                jsonElement = setting.SettingValue <span class="keyword">as</span> <span class="type">JsonElement?</span>;
+                <span class="keyword">if</span> (jsonElement <span class="keyword">is null</span>)
+                {
+                    UpdateNullableSetting(playlist, typeCode);
+                }
+                <span class="keyword">else</span>
+                {
+                    UpdateSetting(playlist, typeCode, jsonElement.Value);
+                }              
+            }
+            playlist.ModifiedDate = <span class="type">DateTime</span>.UtcNow;
+            <span class="keyword">return</span> playlist;
+        }
+        <span class="keyword">catch</span> (<span class="type">ArgumentException</span>)
+        {
+            <span class="keyword">throw</span>;
+        }
+        <span class="keyword">catch</span> (<span class="type">Exception</span> ex)
+        {
+            <span class="type">object?</span> value = jsonElement <span class="keyword">is not null</span> ? jsonElement.Value : <span class="keyword">null</span>;
+            <span class="keyword">var</span> message = FormatSettingError(typeCode, value, <span class="string">$"Unhandled exception: {ex.Message}"</span>);
+            <span class="keyword">var</span> detailedEx = <span class="keyword">new</span> <span class="type">Exception</span>(message, ex);
+            <span class="keyword">throw</span> detailedEx;
+        }
+    }
+
+    <span class="keyword">private static void</span> UpdateSetting(<span class="type">Playlist</span> playlist, <span class="type">SettingTypeCode</span> typeCode, <span class="type">JsonElement</span> value)
+    {
+        <span class="keyword">switch</span> (typeCode)
+        {
+            <span class="keyword">case</span> <span class="type">SettingTypeCode</span>.Name:
+                playlist.Name = value.ToString();
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="type">SettingTypeCode</span>.Shuffle:
+                playlist.Shuffle = value.GetBoolean();
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="type">SettingTypeCode</span>.Delay:
+                <span class="type">int</span> delay = value.GetInt32();
+                <span class="keyword">if</span> (delay &lt; 0) <span class="keyword">throw new</span> <span class="type">ArgumentException</span>(FormatSettingError(typeCode, value, <span class="string">$"{nameof(playlist.Delay)} cannot be negative"</span>));
+                playlist.Delay = delay;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="type">SettingTypeCode</span>.Repeat:
+                <span class="type">int</span> repeat = value.GetInt32();
+                <span class="keyword">if</span> (repeat &lt; 1) <span class="keyword">throw new</span> <span class="type">ArgumentException</span>(FormatSettingError(typeCode, value, <span class="string">$"{nameof(playlist.Repeat)} must be at least 1"</span>));
+                playlist.Repeat = repeat;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="type">SettingTypeCode</span>.Favorite:
+                playlist.Favorite = value.GetBoolean();
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="type">SettingTypeCode</span>.Archived:
+                playlist.Archived = value.GetBoolean();
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="type">SettingTypeCode</span>.BackgroundSoundId:
+                playlist.BackgroundSoundId = value.GetGuid();
+                <span class="keyword">break</span>;
+            <span class="keyword">default</span>:
+                <span class="keyword">throw new</span> <span class="type">ArgumentException</span>(FormatSettingError(typeCode, value, <span class="string">$"{nameof(SettingTypeCode)} does not exist"</span>));
+        }
+    }
+
+    <span class="keyword">private static void</span> UpdateNullableSetting(<span class="type">Playlist</span> playlist, <span class="type">SettingTypeCode</span> typeCode)
+    {
+        <span class="keyword">switch</span> (typeCode)
+        {
+            <span class="keyword">case</span> <span class="type">SettingTypeCode</span>.BackgroundSoundId:
+                playlist.BackgroundSoundId = <span class="keyword">null</span>;
+                <span class="keyword">break</span>;
+            <span class="keyword">default</span>:
+                <span class="keyword">throw new</span> <span class="type">ArgumentException</span>(FormatSettingError(typeCode, <span class="keyword">null</span>, <span class="string">$"{nameof(SettingTypeCode)} does not exist or does not allow nulls"</span>));
+        }
+        <span class="keyword">return</span>;
+    }
+
+    <span class="keyword">private static string</span> FormatSettingError(<span class="type">SettingTypeCode</span> typeCode, <span class="type">object?</span> value, <span class="type">string</span> reason)
+    {
+        <span class="keyword">var</span> valueDisplay = value <span class="keyword">is null</span> ? <span class="string">"null"</span> : value.ToString();
+        <span class="keyword">return</span> <span class="string">$"Invalid setting — Type: {typeCode}, Value: {valueDisplay}. Reason: {reason}"</span>;
+    }
+}
+
+<span class="keyword">public enum</span> <span class="type">SettingTypeCode</span>
+{
+    Name,
+    Shuffle,
+    Delay,
+    Repeat,
+    Favorite,
+    Archived,
+    BackgroundSoundId,
+    NotSet
+}</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="visual-diagram">
+                         <div class="diagram-title">Overview</div>
+            <div class="flow">
+                <div class="flow-item monolithic">
+                    <h3>Monolithic Request</h3>
+                    <p>Must send ALL 7 properties every time</p>
+                    <br>
+                    <strong>Problems:</strong>
+                    <ul>
+                        <li>Overwrites unchanged values</li>
+                        <li>Full payloads</li>
+                        <li>Less flexible API</li>
+                        <li>Client must track all state</li>
+                    </ul>
+                </div>
+                
+                <div class="arrow">→</div>
+                
+                <div class="flow-item modular">
+                    <h3>Modular Request</h3>
+                    <p>Send only the settings you want to change</p>
+                    <br>
+                    <strong>Benefits:</strong>
+                    <ul>
+                        <li>Selective updates only</li>
+                        <li>Smaller payloads</li>
+                        <li>More intuitive API</li>
+                        <li>Better error handling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="example-requests">
+                         <div class="example-title">Request Examples</div>
+            
+            <div class="example">
+                <h4>Original: Want to just toggle favorite?</h4>
+                                 <div class="json-code">{
+   "name": "My Playlist",           <span class="comment">// unchanged</span>
+   "shuffle": true,                 <span class="comment">// unchanged</span>
+   "delay": 5000,                   <span class="comment">// unchanged</span>
+   "repeat": 3,                     <span class="comment">// unchanged</span>
+   "favorite": true,                <span class="comment">// ← only change</span>
+   "archived": false,               <span class="comment">// unchanged</span>
+   "backgroundSoundId": "abc-123"   <span class="comment">// unchanged</span>
+ }</div>
+            </div>
+            
+            <div class="example">
+                <h4>Updated: Just toggle favorite</h4>
+                                 <div class="json-code">{
+   "settings": [
+     {
+       "settingTypeCode": "Favorite",
+       "settingValue": true          <span class="comment">// ← just this</span>
+     }
+   ]
+ }</div>
+            </div>
+            
+            <div class="example">
+                <h4>Updated: Multiple selective changes</h4>
+                                 <div class="json-code">{
+   "settings": [
+     {
+       "settingTypeCode": "Name",
+       "settingValue": "New Playlist Name"
+     },
+     {
+       "settingTypeCode": "Delay",
+       "settingValue": 8000
+     },
+     {
+       "settingTypeCode": "BackgroundSoundId",
+       "settingValue": null          <span class="comment">// ← can even set nulls selectively</span>
+     }
+   ]
+ }</div>
+            </div>
+        </div>
+
+        <div class="benefits-grid">
+                         <div class="benefit-card">
+                 <h3>Precision Updates</h3>
+                 <p>Only modify the exact properties you intend to change, leaving everything else untouched.</p>
+             </div>
+            
+                         <div class="benefit-card">
+                 <h3>Reduced Payload</h3>
+                 <p>Smaller network requests by sending only necessary data instead of the entire object.</p>
+             </div>
+            
+                         <div class="benefit-card">
+                 <h3>Better UX</h3>
+                 <p>Frontend doesn't need to maintain full state - can make targeted updates easily.</p>
+             </div>
+            
+                         <div class="benefit-card">
+                 <h3>Performance</h3>
+                 <p>Less data transfer, more efficient database updates, faster response times.</p>
+             </div>
+            
+                         <div class="benefit-card">
+                 <h3>Error Handling</h3>
+                 <p>Enhanced validation with specific error messages per setting type and value.</p>
+             </div>
+            
+                         <div class="benefit-card">
+                 <h3>Extensibility</h3>
+                 <p>Easy to add new setting types without breaking existing API contracts.</p>
+             </div>
+        </div>
+    </div>
+</body>
+</html>

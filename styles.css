@@ -47,6 +47,10 @@ body {
 
 .hero-actions {
   margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
 }
 
 .resume-btn {
