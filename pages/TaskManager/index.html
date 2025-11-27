@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task Manager Demo</title>
+  <link rel="stylesheet" href="../styles.css"> <!-- adjust path as needed -->
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: inherit;
+    }
+    .header {
+      background-color: #f8f8f8;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .header a {
+      text-decoration: none;
+      color: #007acc;
+      font-weight: bold;
+    }
+    .iframe-container {
+      width: 100%;
+      height: calc(100vh - 72px); /* full viewport minus header height */
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>Task Manager Demo</div>
+    <a href="../../index.html">← Back to Portfolio</a>
+  </div>
+
+  <div class="iframe-container">
+    <iframe src="https://Tasky.azurewebsites.net" title="Task Manager Demo"></iframe>
+  </div>
+</body>
+</html>

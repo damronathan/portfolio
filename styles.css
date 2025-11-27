@@ -4,8 +4,8 @@
 }
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #0f111a;
-  color: #d6d8db;
+  background-color: #E3E3E3;
+  color: #1B3C53;
   line-height: 1.5;
   min-height: 100vh;
   display: flex;
@@ -22,26 +22,25 @@ body {
 .hero {
   text-align: center;
   padding: 4rem 1rem 3rem;
-  border-bottom: 1px solid #2a2e42;
 }
 .hero h1 {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 3.75rem;
-  color: #fff;
+  color: #1B3C53;
   margin-bottom: 0.3rem;
 }
 .hero .subtitle {
-  font-weight: 400;
+  font-weight: 700;
   font-size: 1.625rem;
-  color: #8abf8a; /* subtle green accent */
+  color: #456882; /* subtle green accent */
   margin-bottom: 1rem;
 }
 .hero .intro {
-  font-weight: 300;
+  font-weight: 600;
   font-size: 1.25rem;
   max-width: 600px;
   margin: 0 auto;
-  color: #a1a4a8;
+  color: #1B3C53;
   margin-bottom: 2rem;
 }
 
@@ -55,33 +54,33 @@ body {
 
 .resume-btn {
   display: inline-block;
-  background-color: #8abf8a;
-  color: #0f111a;
+  background-color: #456882;
+  color: #E3E3E3;
   padding: 0.8rem 1.5rem;
   border-radius: 25px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 2px solid #8abf8a;
+  border: 2px solid #1B3C53;
 }
 
 .resume-btn:hover {
   background-color: transparent;
-  color: #8abf8a;
+  color: #1B3C53;
   transform: translateY(-2px);
 }
 
 /* Projects Section */
 section {
-  margin-top: 3rem;
+  /* margin-top: 3rem; */
 }
 h2.section-title {
   font-weight: 600;
   font-size: 2.25rem;
   margin-bottom: 1.5rem;
-  color: #c9d1d9;
-  border-bottom: 2px solid #2a2e42;
+  color: #1B3C53;
+  border-bottom: 2px solid #1B3C53;
   padding-bottom: 0.3rem;
 }
 .projects-list {
@@ -89,17 +88,15 @@ h2.section-title {
   gap: 1.5rem;
 }
 .project-card {
-  background-color: #1b1f33;
+  background-color: #456882;
   padding: 1.5rem;
   border-radius: 8px;
-  border: 1px solid #2a2e42;
+  border: 2px solid #1B3C53;
   transition: border-color 0.3s ease;
 }
-.project-card:hover {
-  border-color: #8abf8a;
-}
+
 .project-title {
-  color: #8abf8a;
+  color: #E3E3E3;
   font-weight: 600;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
@@ -107,7 +104,7 @@ h2.section-title {
 .project-description {
   font-weight: 300;
   font-size: 1.1875rem;
-  color: #b0b4bb;
+  color: #E3E3E3;
   margin-bottom: 1rem;
 }
 .project-contributions {
@@ -120,14 +117,14 @@ h2.section-title {
 .project-contributions li {
   font-weight: 300;
   font-size: 1.125rem;
-  color: #a1a4a8;
+  color: #E3E3E3;
   margin-bottom: 0.3rem;
   position: relative;
   padding-left: 1rem;
 }
 .project-contributions li::before {
   content: "•";
-  color: #8abf8a;
+  color: #E3E3E3;
   position: absolute;
   left: 0;
   font-weight: bold;
@@ -139,8 +136,8 @@ h2.section-title {
   margin-bottom: 1rem;
 }
 .project-tech-tag {
-  background-color: #27472a;
-  color: #8abf8a;
+  background-color: #E3E3E3;
+  color: #1B3C53;
   padding: 0.2rem 0.6rem;
   border-radius: 10px;
   font-weight: 500;
@@ -152,7 +149,8 @@ h2.section-title {
   flex-wrap: wrap;
 }
 .project-link {
-  color: #8abf8a;
+  color: #E3E3E3;
+  background-color: #234C6A;
   text-decoration: none;
   font-size: 1.125rem;
   font-weight: 500;
@@ -162,7 +160,7 @@ h2.section-title {
   transition: border-color 0.3s ease;
 }
 .project-link:hover {
-  border-color: #8abf8a;
+  border-color: #E3E3E3;
 }
 .project-link.placeholder {
   color: #6b7280;
@@ -178,8 +176,9 @@ h2.section-title {
   gap: 0.7rem;
 }
 .skill-tag {
-  background-color: #27472a;
-  color: #8abf8a;
+  background-color: #E3E3E3;
+  color: #1B3C53;
+  border: 1px solid #1B3C53;
   padding: 0.3rem 0.8rem;
   border-radius: 12px;
   font-weight: 500;
@@ -191,7 +190,6 @@ h2.section-title {
   text-align: center;
   margin-top: 3rem;
   padding-top: 1rem;
-  border-top: 1px solid #2a2e42;
 }
 .contact-links {
   margin-top: 1rem;
@@ -201,8 +199,9 @@ h2.section-title {
   flex-wrap: wrap;
 }
 .contact-link {
-  color: #8abf8a;
-  border: 1px solid #8abf8a;
+  color: #E3E3E3;
+  border: 1px solid #1B3C53;
+  background-color: #234C6A;
   padding: 0.7rem 1.3rem;
   border-radius: 20px;
   font-weight: 600;
@@ -210,8 +209,9 @@ h2.section-title {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 .contact-link:hover {
-  background-color: #8abf8a;
-  color: #0f111a;
+  border: 1px solid #1B3C53;
+  background-color: #E3E3E3;
+  color: #1B3C53;
 }
 
 /* Responsive */
