@@ -98,14 +98,24 @@ h2.section-title {
 .project-title {
   color: #E3E3E3;
   font-weight: 600;
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.video-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.video-wrapper iframe {
+  width: 600px;   /* set your desired size */
+  height: 339px;  /* maintain 16:9 ratio */
 }
 .project-description {
   font-weight: 300;
-  font-size: 1.1875rem;
+  font-size: 1.35rem;
   color: #E3E3E3;
   margin-bottom: 1rem;
+  margin-top: 2rem;
 }
 .project-contributions {
   margin-bottom: 1rem;

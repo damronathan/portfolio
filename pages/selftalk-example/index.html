@@ -307,26 +307,16 @@
         <div class="task-section" style="background-color: #252526; border-radius: 0; padding: 1.5rem; margin: 2rem 0; border: 1px solid #3e3e42;">
                          <h2 style="font-size: 1.4em; color: #d4d4d4; margin-bottom: 20px; font-weight: 600; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; border-bottom: 1px solid #3e3e42; padding-bottom: 10px;">Problem</h2>
             <p style="color: #d4d4d4; font-weight: 300; line-height: 1.6; margin-bottom: 15px;">
-                I was tasked with refactoring the update playlist settings API request to support partial updates. The main motivation was to implement a favorite button that could be toggled independently without affecting other playlist settings.
+                The original playlist settings API required full object updates, even for a single change such as toggling the "favorite" flag. This caused overfetching, unnecessary payload size, and UX issues because the frontend had to maintain and submit the full state. I refactored the endpoint to accept modular partial updates based on setting instructions, allowing targeted updates without impacting unrelated fields.
             </p>
-            <p style="color: #d4d4d4; font-weight: 300; line-height: 1.6;">
-                Previously, the API required sending a complete form with all settings whenever any single setting needed to be updated. This approach was inefficient and created unnecessary complexity for simple operations like toggling a favorite status.
-            </p>
+            
         </div>
         
         <div class="comparison">
             <div class="version original">
                                  <div class="version-title">Original: Monolithic Approach</div>
                 <div class="code-section">
-                    <code><span class="keyword">public class</span> <span class="type">UpdatePlaylistSettingsRequest</span>
-{
-    <span class="keyword">public</span> <span class="type">string</span> <span class="property">Name</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public</span> <span class="type">bool</span> <span class="property">Shuffle</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public</span> <span class="type">int</span> <span class="property">Delay</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public</span> <span class="type">int</span> <span class="property">Repeat</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public</span> <span class="type">bool</span> <span class="property">Favorite</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public</span> <span class="type">bool</span> <span class="property">Archived</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
-    <span class="keyword">public</span> <span class="type">Guid?</span> <span class="property">BackgroundSoundId</span> { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+                    <code>
 
     <span class="keyword">public</span> <span class="type">Playlist</span> MapToPlaylist(<span class="type">Playlist</span> playlist)
     {
