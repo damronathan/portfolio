@@ -77,7 +77,11 @@ body {
   right: 0;
   /* transform: translateY(-50%); */
 }
-
+@media (max-width: 768px) {
+  .tasky-img {
+    display: none;
+  }
+}
 /* Projects Section */
 section {
   margin-top: 3rem;
