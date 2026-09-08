@@ -12,7 +12,7 @@
       <h1>Nathan Damron</h1>
       <div class="subtitle">Software Engineer</div>
       <div class="intro">
-        I’m a software engineer who builds tools that work. From automating video workflows to shipping scalable cloud and mobile applications, I turn ideas into production-ready solutions. When I’m not coding, I compete internationally as a weightlifter.
+        Software engineer with years of self-taught training and paid contract experience. I've built a full-stack application I actually use every day, and contributed to a startup building a pre-production mobile app. Before coding, I was a world-class athlete, competing internationally in weightlifting.
       </div>
       <div class="hero-actions">
         <a href="NathanDamron.pdf" target="_blank" class="resume-btn">Resume</a>
@@ -29,26 +29,38 @@
         <div class="project-card">
           <div class="project-title">BarClip</div>
           <div class="project-description">
-            An automated video editing application that reduces manual editing workflows from hours to minutes. I actively use this tool to efficiently produce social media content from weightlifting videos.
-          </div>
-          <div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/O_5HX6B-z2Y"
-    title="BarClip Overview"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
+          Training videos are full of dead time from setting up and stopping the phone, and after a workout, manually trimming each one is the last thing you feel like doing. BarClip automatically detects and trims the lift from any training video, and can batch-process the full session into one edited clip ready for social media.          </div>
+          <div class="video-row">
+  <div class="video-wrapper">
+    <iframe 
+      src="https://youtube.com/embed/mZx6Lb3EC2o?feature=share"
+      title="BarClip Overview"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div class="video-wrapper">
+    <iframe 
+      src="https://youtube.com/embed/kDjmiL7mHY8?feature=share"
+      title="Second Video Title"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
 </div>
+
 
           
           <div class="project-contributions">
             <ul>
-              <li>Reduces time for batch video processing from 1.5 hours to 15 minutes.</li>
-              <li>Developed a cloud-based MVP using React, .NET, Azure Functions, SQL, and SignalR, then pivoted to a local-processing architecture to reduce cloud costs and improve performance. (See the site below)</li>
-              <li>Implemented computer vision workflows using YOLOv8 (ONNX) and FFmpeg for automated frame extraction, detection, and video trimming.</li>
-              <li>Built a full end-to-end local workflow with .NET MAUI, integrating persistence with EF Core to automate YouTube content production.</li>
-              <li>Iterated from a personal project into a fully functional tool used daily.</li>
+              <li>Reduces time for batch video processing from 1.5 hours to 15 minutes</li>
+              <li>Trained a custom YOLOv8 computer vision model to detect weightlifting plates and built an algorithm to translate detections into motion tracking</li>
+              <li>Developed a cloud-based MVP with a React front end and a containerized Azure Function (Docker, Azure Container Apps) for video processing, then pivoted to a local-processing architecture to reduce cloud costs and improve performance.</li>
+              <li>Set up a CI/CD pipeline with GitHub Actions to build and deploy the .NET MAUI iOS app to TestFlight, enabling on-device testing without Mac hardware</li>
+              <li>Repurposed the original web app's API, SQL Server database (EF Core), and Entra External ID authentication into the mobile app's backend once local processing eliminated the need for cloud video handling</li>
             </ul>
           </div>
           <div class="project-tech-tags">
@@ -60,7 +72,6 @@
             <span class="project-tech-tag">React</span>
           </div>
           <div class="project-links">
-            <a href="https://www.barclip.com" target="_blank" class="project-link">Live MVP</a>
             <a href="https://github.com/damronathan/BarClip" target="_blank" class="project-link">View Repo</a>
           </div>
         </div>
@@ -72,12 +83,12 @@
           </div>
           <div class="project-contributions">
             <ul>
-              <li>Cross-platform React Native + Expo with TypeScript</li>
-              <li>RESTful APIs in C# and .NET</li>
-              <li>xUnit unit testing</li>
-              <li>Azure Function microservice for audio processing bottleneck</li>
-              <li>Entra External ID (Azure AD B2C) for authentication</li>
-              <li>GitHub collaboration with branching, PRs, and code reviews</li>
+              <li>Architected an audio processing microservice using Azure Functions, Event Grid, and Blob Storage, cutting perceived API latency from 4.7 seconds to 100ms</li>
+              <li>Refactored the Playlist API from full-object to partial updates, reducing payload size by 80% for common operations</li>
+              <li>Designed and implemented Azure B2C authentication across frontend and backend to protect user-uploaded audio content</li>
+              <li>Integrated third-party voice isolation to improve audio processing stability and reduce retries during testing</li>
+              <li>Built cross-platform mobile app with React Native, Expo, and TypeScript</li>
+              <li>Collaborated with a senior engineer via GitHub branching, PRs, and code reviews</li>
             </ul>
           </div>
           <div class="project-tech-tags">
@@ -86,9 +97,7 @@
             <span class="project-tech-tag">ASP.NET Core</span>
             <span class="project-tech-tag">Azure</span>
           </div>
-          <div class="project-links">
-            <a href="pages/selftalk-example" class="project-link">View Code Example</a>
-          </div>
+          
         </div>
       </div>
     </section>
@@ -116,12 +125,12 @@
         <a href="https://github.com/damronathan" target="_blank" class="contact-link">GitHub</a>
       </div>
     </section>
-    <a href="http://Tasky.azurewebsites.net">
+    <!-- <a href="http://Tasky.azurewebsites.net">
           <img src="images/TASKYMOBILE.JPG" class="tasky-mobile">
         </a>
         <a href="http://Tasky.azurewebsites.net">
   <img src="images/TASKY.JPG" class="tasky-img">
-</a>
+</a> -->
   </div>
   <script src="script.js"></script>
 </body>
