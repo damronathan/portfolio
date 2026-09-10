@@ -111,11 +111,16 @@ h2.section-title {
   font-size: 2rem;
 }
 .video-wrapper {
-  position: relative;
-  height: 70vh;           /* controls how tall it can get, adjust as needed */
-  max-height: 600px;      /* hard cap so it's never too tall on big screens */
-  aspect-ratio: 9 / 16;   /* width follows automatically */
+  max-width: 500px; /* adjust to whatever size looks right */
   margin: 0 auto;
+  aspect-ratio: 1 / 1;
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* or 'contain' if you don't want any cropping */
+  border-radius: 8px; /* optional, matches a lot of modern UI styles */
 }
 .video-wrapper iframe {
   position: absolute;

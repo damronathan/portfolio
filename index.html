@@ -30,35 +30,19 @@
           <div class="project-title">BarClip</div>
           <div class="project-description">
           Training videos are full of dead time from setting up and stopping the phone, and after a workout, manually trimming each one is the last thing you feel like doing. BarClip automatically detects and trims the lift from any training video, and can batch-process the full session into one edited clip ready for social media.          </div>
-          <div class="video-row">
-  <div class="video-wrapper">
-    <iframe 
-      src="https://youtube.com/embed/mZx6Lb3EC2o?feature=share"
-      title="BarClip Overview"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <div class="video-wrapper">
-    <iframe 
-      src="https://youtube.com/embed/kDjmiL7mHY8?feature=share"
-      title="Second Video Title"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
+          <div class="video-wrapper">
+  <video controls preload="metadata" poster="copy_76499848-BE31-454E-90AB-D11D124AB036.png">
+    <source src="copy_76499848-BE31-454E-90AB-D11D124AB036.mov" type="video/mp4">
+  </video>
 </div>
 
 
           
           <div class="project-contributions">
             <ul>
-              <li>Reduces time for batch video processing from 1.5 hours to 15 minutes</li>
               <li>Trained a custom YOLOv8 computer vision model to detect weightlifting plates and built an algorithm to translate detections into motion tracking</li>
               <li>Developed a cloud-based MVP with a React front end and a containerized Azure Function (Docker, Azure Container Apps) for video processing, then pivoted to a local-processing architecture to reduce cloud costs and improve performance.</li>
+              <li>Reduces time for batch video processing from 1.5 hours to 15 minutes</li>
               <li>Set up a CI/CD pipeline with GitHub Actions to build and deploy the .NET MAUI iOS app to TestFlight, enabling on-device testing without Mac hardware</li>
               <li>Repurposed the original web app's API, SQL Server database (EF Core), and Entra External ID authentication into the mobile app's backend once local processing eliminated the need for cloud video handling</li>
             </ul>
